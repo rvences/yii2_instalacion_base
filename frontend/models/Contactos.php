@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -15,6 +15,9 @@ use Yii;
  * @property string $direccion
  * @property string $asistente
  * @property string $fecha_reunion
+ * @property integer $empresas_id
+ *
+ * @property Empresas $empresas
  */
 class Contactos extends \yii\db\ActiveRecord
 {
@@ -32,13 +35,14 @@ class Contactos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['puesto', 'nombre'], 'required'],
+            [['puesto', 'nombre', 'empresas_id'], 'required'],
             [['fecha_reunion'], 'safe'],
+            [['empresas_id'], 'integer'],
             [['puesto'], 'string', 'max' => 50],
             [['nombre', 'correo'], 'string', 'max' => 100],
             [['telefono'], 'string', 'max' => 15],
             [['direccion', 'asistente'], 'string', 'max' => 255],
-            [['nombre', 'telefono'], 'unique', 'targetAttribute' => ['nombre', 'telefono'], 'message' => 'The combination of Nombre Completo and Teléfono con cada has already been taken.']
+            [['nombre', 'telefono'], 'unique', 'targetAttribute' => ['nombre', 'telefono'], 'message' => 'The combination of Nombre and Telefono has already been taken.']
         ];
     }
 
@@ -50,12 +54,23 @@ class Contactos extends \yii\db\ActiveRecord
         return [
             'idcontacto' => 'Idcontacto',
             'puesto' => 'Puesto',
-            'nombre' => 'Nombre Completo',
-            'telefono' => 'Teléfono con cada',
-            'correo' => 'Correo Electrónico',
-            'direccion' => 'Dirección',
-            'asistente' => 'Nombre del Asistente',
-            'fecha_reunion' => 'Fecha última reunión',
+            'nombre' => 'Nombre',
+            'telefono' => 'Telefono',
+            'correo' => 'Correo',
+            'direccion' => 'Direccion',
+            'asistente' => 'Asistente',
+            'fecha_reunion' => 'Fecha Reunion',
+            'empresas_id' => 'Empresas ID',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmpresas()
+    {
+        return $this->hasOne(Empresas::className(), ['idempresa' => 'empresas_id']);
+    }
+
+
 }

@@ -54,13 +54,13 @@ class Inversiones extends \yii\db\ActiveRecord
         return [
             'idinversion' => 'ID único',
             'empresa_id' => 'ID foráneo empresa ',
-            'anio' => 'Año de la inversión',
+            'anio' => 'Inversión en',
             'monto_inversion' => 'Monto Invertido',
             'monto_propuesta' => 'Monto Propuesta',
             'fecha_campana' => 'Fecha de Campaña',
             'productos_interes' => 'Productos en los que esta interesados',
             'comentarios' => 'Comentarios',
-            'propuesta' => 'Documento de la Propuesta entregada',
+            'propuesta' => 'Propuesta entregada',
             'campana' => 'Campaña Ofrecida',
             'temporalidad' => 'Temporalidad de la campaña',
         ];

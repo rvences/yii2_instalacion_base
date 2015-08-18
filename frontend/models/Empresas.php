@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use Yii;
+use common\models\User;
+use frontend\models\Contactos;
 
 /**
  * This is the model class for table "empresas".
@@ -13,6 +15,7 @@ use Yii;
  * @property string $status
  *
  * @property User $user
+ * @property Contactos[] $contactos
  * @property Inversiones[] $inversiones
  */
 class Empresas extends \yii\db\ActiveRecord
@@ -46,8 +49,8 @@ class Empresas extends \yii\db\ActiveRecord
         return [
             'idempresa' => 'ID unico para cada empresa',
             'user_id' => 'Relación foránea con los usuarios del sistema',
-            'cuenta' => 'Nombre de la cuenta como lo conoce el vendedor',
-            'status' => 'En que estado se encuentra la empresa CLIENTE, VISITADO, NO VISITADO, FUERA DEL DF',
+            'cuenta' => 'Cuenta', //'Nombre de la cuenta como lo conoce el vendedor',
+            'status' => 'Estado', //'En que estado se encuentra la empresa CLIENTE, VISITADO, NO VISITADO, FUERA DEL DF',
         ];
     }
 
@@ -66,4 +69,35 @@ class Empresas extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Inversiones::className(), ['empresa_id' => 'idempresa']);
     }
+
+    /**
+     * Obtiene el username de acuerdo a user_id
+     * @return string
+     */
+
+    public function getGerente()
+    {
+        return $this->user->username;
+    }
+
+
+    /**
+     * Obtiene el listado de todos los contactos del modelo de Contacto
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContactos()
+    {
+        return $this->hasMany(Contactos::className(), ['empresas_id'=>'idempresa']);
+        //         return $this->hasOne(Contactos::className(), ['empresas_id'=>'idempresa']);
+
+
+    }
+
+    public function getNombre()
+    {
+        return $this->contactos->nombre;
+    }
+
+
+
 }
