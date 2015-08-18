@@ -16,6 +16,7 @@ class m150728_232637_create_contactos_table extends Migration
         $this->createTable('{{%contactos}}', [
             // Toda la información de los contactos NO se liga a nada
             'idcontacto' => Schema::TYPE_PK,
+            'empresa_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'puesto' => Schema::TYPE_STRING . '(50) NOT NULL',
             'nombre' =>  Schema::TYPE_STRING . '(100) NOT NULL',
             'telefono' => Schema::TYPE_STRING . '(15) ',
@@ -26,14 +27,15 @@ class m150728_232637_create_contactos_table extends Migration
             'UNIQUE KEY (nombre, telefono)',
         ], $tableOptions);
 
+        $this->addForeignKey('fk_emprea1_id', 'contactos', 'empresa_id', 'empresas', 'idempresa', 'RESTRICT', 'RESTRICT');
 
         // Inserta algunos Clientes
         $this->batchInsert('contactos',
-            array('puesto', 'nombre', 'telefono', 'correo', 'direccion', 'asistente', 'fecha_reunion'),
+            array('empresa_id', 'puesto', 'nombre', 'telefono', 'correo', 'direccion', 'asistente', 'fecha_reunion'),
             array(
-                [ 'Director de Comunicación Institucional', 'Lic. Dante Pinal Ibarra', ' 5265-7404', 'dante.pinal@fonacot.gob.mx', 'Insurgentes Sur 452 pb,  Col. Roma Sur,  Del. Cuauhtémoc, c.p.  06760', 'Sria. Margrit', '24 DE ABRIL 2014'],
-                ['Coordinador de Administracion y Finanzas', 'Javier Gilberto Dennis Valenzuwla', '53424966, Nextel 46001898', 'copredsaf@hotmail.com', 'Calz. Mexico Tacuba 562 Edif. Anexo Sur 2do Piso. Col Popotla', null, null],
-                ['Subdirector de Comunicación Social', 'Mtro. Luis Miguel Aldama Martínez', '55 73 24 63 cel: 5585 810426', 'aldama.luis@gmail.com', 'Plaza de la Constitución #1, Col. Tlalpan Centro', null, null],
+                [1, 'Director de Comunicación Institucional', 'Lic. Dante Pinal Ibarra', ' 5265-7404', 'dante.pinal@fonacot.gob.mx', 'Insurgentes Sur 452 pb,  Col. Roma Sur,  Del. Cuauhtémoc, c.p.  06760', 'Sria. Margrit', '24 DE ABRIL 2014'],
+                [1, 'Coordinador de Administracion y Finanzas', 'Javier Gilberto Dennis Valenzuwla', '53424966, Nextel 46001898', 'copredsaf@hotmail.com', 'Calz. Mexico Tacuba 562 Edif. Anexo Sur 2do Piso. Col Popotla', null, null],
+                [2, 'Subdirector de Comunicación Social', 'Mtro. Luis Miguel Aldama Martínez', '55 73 24 63 cel: 5585 810426', 'aldama.luis@gmail.com', 'Plaza de la Constitución #1, Col. Tlalpan Centro', null, null],
             )
         );
 
