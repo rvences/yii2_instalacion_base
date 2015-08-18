@@ -29,6 +29,18 @@ class m150728_223725_create_inversiones_table extends Migration
         ], $tableOptions);
 
         $this->addForeignKey('fk_empresa_id', 'inversiones', 'empresa_id', 'empresas', 'idempresa', 'RESTRICT', 'RESTRICT');
+
+        // Insertando los ejemplos de inversiones
+        $this->batchInsert('inversiones',
+            array('empresa_id', 'anio', 'monto_inversion', 'monto_propuesta'), // Se tiene que borrar todas para las llaves foraneas
+            array(
+                [1, 2015, 1000000, 800000],
+                [1, 2014, 1000000, 850000],
+                [1, 2013, 1000000, 50000],
+                [2, 2013, 1000000, 50000],
+                [3, 2014, 1000000, 50000],
+            )
+        );
     }
 
     public function down()

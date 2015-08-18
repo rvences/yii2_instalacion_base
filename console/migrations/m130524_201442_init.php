@@ -26,6 +26,17 @@ class m130524_201442_init extends Migration
             'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $tableOptions);
+
+
+        // Crea los usuarios que se pueden loguear en el sistema
+        $this->batchInsert('user',
+            array('username', 'auth_key', 'password_hash', 'email', 'status', 'created_at', 'updated_at'),
+            array(
+                ['kory', 'RjwwBJFBEWPsRsj9oCcgivVErTFegjfm', '$2y$13$qCG9wSmSRq6C0FEMdU9pbeZWfYkwkXrSVG3boHf5Nv3dsbI4km9My', 'kvences@gmail.com', '10', '1438127540', '1438127540'  ],
+                ['kory2', 'RjwwBJFBEWPsRsj9oCcgivVErTFegjfm', '$2y$13$qCG9wSmSRq6C0FEMdU9pbeZWfYkwkXrSVG3boHf5Nv3dsbI4km9My', 'kvences@gmail.com', '10', '1438127540', '1438127540'  ]
+            )
+        );
+
     }
 
     public function down()

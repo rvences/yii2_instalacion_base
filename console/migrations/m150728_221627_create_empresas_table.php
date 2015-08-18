@@ -22,6 +22,18 @@ class m150728_221627_create_empresas_table extends Migration
         ], $tableOptions);
 
         $this->addForeignKey('fk_user_id', 'empresas', 'user_id', 'user', 'id', 'RESTRICT', 'RESTRICT');
+
+
+        // Insertando los datos de Delegación, Intercambio o Fundación
+        $this->batchInsert('empresas',
+            array('user_id', 'cuenta', 'status'), // Se tiene que borrar todas para las llaves foraneas
+            array(
+                [1, 'BIMBO', 'ACTIVA'],
+                [1, 'CERVECERIA MODELO', 'ACTIVA'],
+                [1, 'COCA COLA', 'FORANEA'],
+            )
+        );
+
     }
 
     public function down()
